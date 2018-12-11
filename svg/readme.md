@@ -1,6 +1,8 @@
 # svg标签在html页面中的默然属性
 * width="300"
 * height="150"
+* fill="#000"
+* stroke="transparent"
 
 # 踩坑
 * 1px变2px。
