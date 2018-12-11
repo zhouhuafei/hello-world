@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>svg-in-html-2</title>
+        <title>circle</title>
         <style>
             * {
                 margin: 0;
@@ -22,13 +22,8 @@
     </head>
     <body>
         <svg>
-            <circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red"/>
+            <!--r需要减去stroke-width除以2之后的值才会很精确-->
+            <circle cx="150" cy="75" r="74" stroke="black" stroke-width="2" fill="red"/>
         </svg>
-        <script>
-            const svg = document.querySelector('svg');
-            for (let attr in svg) {
-                console.log(attr, ': ', svg[attr]);
-            }
-        </script>
     </body>
 </html>
