@@ -7,6 +7,10 @@
     <body>
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.9.0"></script>
         <script>
+            /*
+            张量(Tensor)和变量（Variable）是TensorFlow.js中数据的主要表现形式，两者不同之处在于张量是不可变的，而变量是可变的。
+            变量由张量生成，且张量不可变而变量可变。
+            */
             (() => {
                 const initialValues = tf.zeros([5]);
                 const biases = tf.variable(initialValues); // 初始化biases
