@@ -2,7 +2,7 @@
 * width="300"
 * height="150"
 * fill="#000"
-* stroke="transparent"
+* stroke="none"
 
 # 踩坑
 * 1px变2px。

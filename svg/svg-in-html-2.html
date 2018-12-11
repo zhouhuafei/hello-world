@@ -26,9 +26,15 @@
         </svg>
         <script>
             const svg = document.querySelector('svg');
+            /*
             for (let attr in svg) {
                 console.log(attr, ': ', svg[attr]);
             }
+            */
+            console.log('getComputedStyle(svg).fill: ', getComputedStyle(svg).fill);
+            console.log('getComputedStyle(svg).stroke: ', getComputedStyle(svg).stroke);
+            console.log('getComputedStyle(svg).width: ', getComputedStyle(svg).width);
+            console.log('getComputedStyle(svg).height: ', getComputedStyle(svg).height);
         </script>
     </body>
 </html>
