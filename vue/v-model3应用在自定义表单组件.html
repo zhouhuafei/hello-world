@@ -9,12 +9,17 @@
         <div id="app">
             <input v-model="value"/>
             <p>{{value}}</p>
-            <g-sub :value="value"></g-sub>
+            <g-sub v-model="value"></g-sub>
         </div>
         <script>
             Vue.component('g-sub', {
                 props: ['value'],
-                template: `<div>{{value}}</div>`,
+                mounted() {
+                    setTimeout(() => {
+                        this.$emit('input', 'hello world2');
+                    }, 1000);
+                },
+                template: `<input v-model="value" />`,
             });
             new Vue({
                 el: '#app',
