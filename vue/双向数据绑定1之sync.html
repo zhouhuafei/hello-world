@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="https://cdn.bootcss.com/vue/2.5.21/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input v-model="value"/>
+            <p>{{value}}</p>
+            <g-sub :value.sync="value"></g-sub>
+        </div>
+        <script>
+            /*props不允许被改变，但是如果使用sync语法糖配合this.$emit可以脱离限制，实现双向数据绑定。*/
+            Vue.component('g-sub', {
+                props: ['value'],
+                template: `<div>{{value}}</div>`,
+                mounted() {
+                    setTimeout(() => {
+                        this.$emit('update:value', 'hello world2');
+                    }, 1000);
+                },
+            });
+            new Vue({
+                el: '#app',
+                data: {
+                    value: 'hello world',
+                },
+            });
+        </script>
+    </body>
+</html>
+

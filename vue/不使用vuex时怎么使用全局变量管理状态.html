@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="https://cdn.bootcss.com/vue/2.5.21/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input v-model="value"/>
+            <p>{{value}}</p>
+            <g-sub></g-sub>
+        </div>
+        <script>
+            var globalJson = {
+                value: 'hello world',
+            };
+            Vue.prototype.globalData = globalJson;
+            Vue.component('g-sub', {
+                template: `<div>{{globalData.value}}</div>`,
+                mounted() {
+                    setTimeout(() => {
+                        this.globalData.value = 'hello world2';
+                    }, 1000);
+                },
+            });
+            new Vue({
+                el: '#app',
+                data: globalJson,
+            });
+        </script>
+    </body>
+</html>
+

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="https://cdn.bootcss.com/vue/2.5.21/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input v-model="json.value"/>
+            <p>{{json.value}}</p>
+            <g-sub :json="json"></g-sub>
+        </div>
+        <script>
+            /*props不允许被改变，但是如果使用对象则可以脱离这个限制，实现双向数据绑定。*/
+            Vue.component('g-sub', {
+                props: ['json'],
+                template: `<div>{{json.value}}</div>`,
+                mounted() {
+                    setTimeout(() => {
+                        this.json.value = 'hello world2';
+                    }, 1000);
+                },
+            });
+            new Vue({
+                el: '#app',
+                data: {
+                    json: {
+                        value: 'hello world',
+                    },
+                },
+            });
+        </script>
+    </body>
+</html>
+
