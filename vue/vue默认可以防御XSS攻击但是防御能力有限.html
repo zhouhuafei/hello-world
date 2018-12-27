@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="https://cdn.bootcss.com/vue/2.5.21/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input v-model="value1"/>
+            <p>{{value1}}</p>
+            <p v-text="value1"></p>
+            <p v-html="value1"></p>
+            <input v-model="value2"/>
+            <p>{{value2}}</p>
+            <p v-text="value2"></p>
+            <p v-html="value2"></p>
+        </div>
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    value1: '<img src="null" onerror="alert(document.cookie)"/>',
+                    value2: '<script>alert(123)<\/script>',
+                },
+            });
+        </script>
+        <!--
+        防御能力有限：
+        原生js使用innerHTML渲染```<script>alert(123)</script>```时，不会渲染出来东西。可以说是进行了一次XSS过滤。
+        v-html渲染```<script>alert(123)</script>```时，会对标签进行转义。渲染出来的是字符串：```<script>alert(123)</script>```。可以说是进行了一次XSS过滤。
+        但是原生js的innerHTML和vue框架的v-html都无法过滤```<img src="null" onerror="alert(document.cookie)"/>```这种DOM类型的XSS攻击。
+        建议1：非富文本内容使用v-text或者{{}}渲染。
+        建议2：富文本内容使用 https://github.com/leizongmin/js-xss 过滤之后。再使用v-html进行渲染。
+        -->
+    </body>
+</html>
