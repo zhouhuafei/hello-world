@@ -23,6 +23,10 @@
         <input v-model="value"/>
         等同于
         <input :value="value" @input="value=$event.target.value"/>
+        以下纯属个人猜测，未经证实：
+        上述的语法糖规则应仅限于type=text的input标签。
+        如果是type=radio或者type=checkbox的input标签。应该等同于：@change="value=$event.target.value"
+        如果是自定义组件手动调起this.$emit('input', 'abc')的。应该等同于：@input="val=>value=val"
         -->
     </body>
 </html>
