@@ -18,5 +18,11 @@
                 },
             });
         </script>
+        <!--
+        v-model是语法糖
+        <input v-model="value"/>
+        等同于
+        <input :value="value" @input="value=$event.target.value"/>
+        -->
     </body>
 </html>
