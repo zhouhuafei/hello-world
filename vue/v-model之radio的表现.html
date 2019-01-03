@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="https://cdn.bootcss.com/vue/2.5.21/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input type="radio" value="boy" v-model="value"/>男
+            <input type="radio" value="girl" v-model="value"/>女
+            <p>{{value}}</p>
+        </div>
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    value: 'boy',
+                },
+            });
+        </script>
+    </body>
+</html>

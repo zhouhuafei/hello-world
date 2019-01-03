@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="https://cdn.bootcss.com/vue/2.5.21/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input type="checkbox" value="one" v-model="value"/>一
+            <input type="checkbox" value="two" v-model="value"/>二
+            <p>{{value}}</p>
+        </div>
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    value: ['one'],
+                },
+            });
+        </script>
+    </body>
+</html>
