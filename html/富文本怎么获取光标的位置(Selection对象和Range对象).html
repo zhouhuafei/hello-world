@@ -27,9 +27,8 @@
             let saveRange = null;
             // 在光标的位置插入节点
             insertNode.addEventListener('click', function () {
-                let Range = null;
                 if (Selection.rangeCount !== 0) {
-                    Range = Selection.getRangeAt(0);
+                    const Range = Selection.getRangeAt(0);
                     const span = document.createElement('span');
                     span.innerHTML = Math.round(Math.random() * (99 - 11) + 11);
                     /*
@@ -48,7 +47,6 @@
                         console.log('不是div节点且不是div节点的子级且saveRange存在，走saveRange', saveRange);
                     }
                 }
-                return Range;
             });
             div.addEventListener('blur', function () {
                 saveRange = Selection.getRangeAt(0);
