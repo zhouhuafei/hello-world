@@ -10,29 +10,50 @@
         <div contenteditable>0123456789</div>
         <button class="insertNode">insertNode</button>
         <script>
+            function isChildOrSelf(parent, child) { // child如果是parent的子节点或者是parent本身。则返回true
+                if (child === parent) {
+                    return true;
+                }
+                let result = false;
+                while (child.parentNode !== null) {
+                    child = child.parentNode;
+                    if (child === parent) {
+                        result = true;
+                        break;
+                    }
+                }
+                return result;
+            }
+
             const div = document.querySelector('div');
             const insertNode = document.querySelector('.insertNode');
             const Selection = document.getSelection();
+            let saveRange = null;
             // 在光标的位置插入节点
             insertNode.addEventListener('click', function () {
                 let Range = null;
                 if (Selection.rangeCount !== 0) {
                     Range = Selection.getRangeAt(0);
-                    /*
-                        * Range.commonAncestorContainer如果是div节点或者是div节点的子级
-                            - 直接对Range执行插入操作即可。
-                        * Range.commonAncestorContainer如果不是div节点并且不是div节点的子级
-                            - 直接对saveRange执行插入操作即可。
-                    */
-                    console.log(Range.commonAncestorContainer);
                     const span = document.createElement('span');
                     span.innerHTML = Math.round(Math.random() * (99 - 11) + 11);
-                    Range.insertNode(span);
+                    /*
+                        * 如果Range.commonAncestorContainer是div节点或者是div节点的子级。
+                            - 直接对Range执行插入操作即可。
+                        * 如果Range.commonAncestorContainer不是div节点并且不是div节点的子级并且saveRange存在。
+                            - 直接对saveRange执行插入操作即可。
+                        * 否则不进行任何操作。
+                    */
+                    if (isChildOrSelf(div, Range.commonAncestorContainer)) {
+                        Range.insertNode(span);
+                    }
+                    if (!isChildOrSelf(div, Range.commonAncestorContainer) && saveRange) {
+                        saveRange.insertNode(span);
+                    }
                 }
                 return Range;
             });
             div.addEventListener('blur', function () {
-                const saveRange = Selection.getRangeAt(0);
+                saveRange = Selection.getRangeAt(0);
                 console.log('失去焦点的时候应该把这个Range保存下来：', saveRange);
             });
         </script>
