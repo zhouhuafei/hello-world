@@ -18,13 +18,22 @@
                 let Range = null;
                 if (Selection.rangeCount !== 0) {
                     Range = Selection.getRangeAt(0);
-                    // Range.commonAncestorContainer如果是div节点或者是div节点的子级才执行插入节点的动作才是稳妥的。
+                    /*
+                        * Range.commonAncestorContainer如果是div节点或者是div节点的子级
+                            - 直接对Range执行插入操作即可。
+                        * Range.commonAncestorContainer如果不是div节点并且不是div节点的子级
+                            - 直接对saveRange执行插入操作即可。
+                    */
                     console.log(Range.commonAncestorContainer);
                     const span = document.createElement('span');
                     span.innerHTML = Math.round(Math.random() * (99 - 11) + 11);
                     Range.insertNode(span);
                 }
                 return Range;
+            });
+            div.addEventListener('blur', function () {
+                const saveRange = Selection.getRangeAt(0);
+                console.log('失去焦点的时候应该把这个Range保存下来：', saveRange);
             });
         </script>
     </body>
