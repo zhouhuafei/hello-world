@@ -27,25 +27,32 @@
             let saveRange = null;
             // 在光标的位置插入节点
             insertNode.addEventListener('click', function () {
+                let Range = null;
+                if (Selection.rangeCount === 0 && !saveRange) {
+                    return;
+                }
+                if (Selection.rangeCount === 0 && saveRange) {
+                    Range = saveRange;
+                }
                 if (Selection.rangeCount !== 0) {
-                    const Range = Selection.getRangeAt(0);
-                    const span = document.createElement('span');
-                    span.innerHTML = Math.round(Math.random() * (99 - 11) + 11);
-                    /*
-                        * 如果Range.commonAncestorContainer是div节点或者是div节点的子级。
-                            - 直接对Range执行插入操作即可。
-                        * 如果Range.commonAncestorContainer不是div节点并且不是div节点的子级并且saveRange存在。
-                            - 直接对saveRange执行插入操作即可。
-                        * 否则不进行任何操作。
-                    */
-                    if (isChildOrSelf(div, Range.commonAncestorContainer)) {
-                        Range.insertNode(span);
-                        console.log('是div节点或者是div节点的子级，走Range', Range);
-                    }
-                    if (!isChildOrSelf(div, Range.commonAncestorContainer) && saveRange) {
-                        saveRange.insertNode(span);
-                        console.log('不是div节点且不是div节点的子级且saveRange存在，走saveRange', saveRange);
-                    }
+                    Range = Selection.getRangeAt(0);
+                }
+                const span = document.createElement('span');
+                span.innerHTML = Math.round(Math.random() * (99 - 11) + 11);
+                /*
+                    * 如果Range.commonAncestorContainer是div节点或者是div节点的子级。
+                        - 直接对Range执行插入操作即可。
+                    * 如果Range.commonAncestorContainer不是div节点并且不是div节点的子级并且saveRange存在。
+                        - 直接对saveRange执行插入操作即可。
+                    * 否则不进行任何操作。
+                */
+                if (isChildOrSelf(div, Range.commonAncestorContainer)) {
+                    Range.insertNode(span);
+                    console.log('是div节点或者是div节点的子级，走Range', Range);
+                }
+                if (!isChildOrSelf(div, Range.commonAncestorContainer) && saveRange) {
+                    saveRange.insertNode(span);
+                    console.log('不是div节点且不是div节点的子级且saveRange存在，走saveRange', saveRange);
                 }
             });
             div.addEventListener('blur', function () {
