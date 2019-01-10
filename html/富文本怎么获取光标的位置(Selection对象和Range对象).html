@@ -14,15 +14,11 @@
                 if (child === parent) {
                     return true;
                 }
-                let result = false;
-                while (child.parentNode !== null) {
+                while (child !== parent && child.parentNode !== null) {
                     child = child.parentNode;
-                    if (child === parent) {
-                        result = true;
-                        break;
-                    }
                 }
-                return result;
+                // child要么是null要么是parent。
+                return child === parent;
             }
 
             const div = document.querySelector('div');
@@ -45,9 +41,11 @@
                     */
                     if (isChildOrSelf(div, Range.commonAncestorContainer)) {
                         Range.insertNode(span);
+                        console.log('是div节点或者是div节点的子级，走Range', Range);
                     }
                     if (!isChildOrSelf(div, Range.commonAncestorContainer) && saveRange) {
                         saveRange.insertNode(span);
+                        console.log('不是div节点且不是div节点的子级且saveRange存在，走saveRange', saveRange);
                     }
                 }
                 return Range;
