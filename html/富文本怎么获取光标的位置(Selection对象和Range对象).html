@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+    </head>
+    <body>
+        <div contenteditable>0123456789</div>
+        <button class="insertNode">insertNode</button>
+        <script>
+            const div = document.querySelector('div');
+            const insertNode = document.querySelector('.insertNode');
+            const Selection = document.getSelection();
+            // 在光标的位置插入节点
+            insertNode.addEventListener('click', function () {
+                let Range = null;
+                if (Selection.rangeCount !== 0) {
+                    Range = Selection.getRangeAt(0);
+                    // Range.commonAncestorContainer如果是div节点或者是div节点的子级才执行插入节点的动作才是稳妥的。
+                    console.log(Range.commonAncestorContainer);
+                    const span = document.createElement('span');
+                    span.innerHTML = Math.round(Math.random() * (99 - 11) + 11);
+                    Range.insertNode(span);
+                }
+                return Range;
+            });
+        </script>
+    </body>
+</html>
