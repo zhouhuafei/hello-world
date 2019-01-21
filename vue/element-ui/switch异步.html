@@ -9,12 +9,15 @@
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://unpkg.com/element-ui/lib/index.js"></script>
         <style>
-            .el-switch.is-disabled .el-switch__core,
-            .el-switch.is-disabled .el-switch__label {
+            /*
+            自定义no-disabled防止污染全局的is-disabled
+            */
+            .el-switch.no-disabled.is-disabled .el-switch__core,
+            .el-switch.no-disabled.is-disabled .el-switch__label {
                 cursor: default;
             }
 
-            .el-switch.is-disabled {
+            .el-switch.no-disabled.is-disabled {
                 opacity: 1;
             }
         </style>
@@ -23,6 +26,7 @@
         <div id="app">
             <el-switch
                 disabled
+                class="no-disabled"
                 ref="elSwitch"
                 v-model="value2"
                 active-color="#13ce66"
