@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+        <style>
+            .el-switch.is-disabled .el-switch__core,
+            .el-switch.is-disabled .el-switch__label {
+                cursor: default;
+            }
+
+            .el-switch.is-disabled {
+                opacity: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <el-switch
+                disabled
+                ref="elSwitch"
+                v-model="value2"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+                @click.native="onClick"
+                @change="onChange"
+            >
+            </el-switch>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#app',
+                data() {
+                    return {
+                        value2: true,
+                    };
+                },
+                methods: {
+                    onClick() {
+                        setTimeout(() => {
+                            this.value2 = !this.value2;
+                        }, 400);
+                    },
+                    onChange(value2) {
+                        console.log(value2);
+                    },
+                },
+                mounted() {
+                    console.log(this.$refs.elSwitch);
+                },
+            });
+        </script>
+    </body>
+</html>
