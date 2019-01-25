@@ -15,7 +15,7 @@
             }
 
             #app {
-                display: flex;
+                /*display: flex;*/
             }
 
             .views, .components {
@@ -107,10 +107,11 @@
                         console.log('end this.views', this.views);
                         if (e.to.classList.contains('views')) { // 填充进去了
                             // 在这里把components中的数据处理成views中想要的数据。
-                            var obj = this.views.splice(e.newIndex, 1)[0];
-                            this.views.push({
+                            var obj = this.views[e.newIndex];
+                            this.views.splice(e.newIndex, 0, {
                                 name: obj.name + 's',
                             });
+                            this.views.splice(e.newIndex + 1, 1);
                         }
                     },
                 },
