@@ -49,10 +49,10 @@
     </head>
     <body>
         <div id="app">
-            <draggable class="components" v-model="components" :options="componentsOptions" @start="start" @end="end">
+            <draggable class="components" v-model="components" :options="componentsOptions" @start="componentsStart" @end="componentsEnd">
                 <div v-for="(item,index) in components" :key="item.name" class="components-item">{{item.name}}</div>
             </draggable>
-            <draggable class="views" v-model="views" :options="viewsOptions" @start="start" @end="end">
+            <draggable class="views" v-model="views" :options="viewsOptions">
                 <div v-for="(item,index) in views" :key="item.name" class="views-item">{{item.name}}</div>
             </draggable>
         </div>
@@ -78,33 +78,37 @@
                         },
                         components: [
                             {
-                                'name': '1',
+                                name: '1',
                             },
                             {
-                                'name': '2',
+                                name: '2',
                             },
                             {
-                                'name': '3',
+                                name: '3',
                             },
                         ],
                         views: [
                             {
-                                'name': '1s',
+                                name: '1s',
                             },
                             {
-                                'name': '2s',
+                                name: '2s',
                             },
                         ],
                     };
                 },
                 methods: {
-                    start(a, b, c) {
-                        console.log('start', a, b, c);
-                        console.log('this.views', this.views);
+                    componentsStart(e) {
+                        console.log('start', e);
+                        console.log('start this.views', this.views);
                     },
-                    end(a, b, c) {
-                        console.log('end', a, b, c);
-                        console.log('this.views', this.views);
+                    componentsEnd(e) {
+                        console.log('end', e);
+                        console.log('end this.views', this.views);
+                        if (e.to.classList.contains('views')) { // 填充进去了
+                            // 在这里把components中的数据处理成views中想要的数据。
+                            this.views[e.newIndex].name += 's';
+                        }
                     },
                 },
             });
