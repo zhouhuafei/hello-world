@@ -61,12 +61,16 @@
             }
 
             /* 重置拖拽时的样式 */
+            .views .components-item {
+                margin: 0;
+            }
+
+            /*
             .components-item-desc {
                 display: none;
             }
 
             .views .components-item.ghost-class {
-                margin: 0;
                 width: 100%;
             }
 
@@ -77,6 +81,7 @@
             .views .components-item.ghost-class .components-item-desc {
                 display: block;
             }
+            */
         </style>
     </head>
     <body>
@@ -89,7 +94,7 @@
                      @mouseup="componentsMouseup(index)"
                 >
                     <div class="components-item-content">{{item.name}}</div>
-                    <div class="components-item-desc">放到此处</div>
+                    <!--<div class="components-item-desc">放到此处</div>-->
                 </div>
             </draggable>
             <draggable class="views" v-model="views" :options="viewsOptions">
@@ -118,9 +123,11 @@
                             sort: false, // 关闭排序。
                             forceFallback: true, // 是否模拟html5的拖拽(强制降级兼容处理)。设置为true在拖拽时可以使用鼠标滚轮控制容器滚动(此处也要设置为true，否则左侧组件就无法拖拽到右侧容器中了)。
                             // class应该在拖拽之初进行设置，被选中的进行高亮即可。
+                            /*
                             fallbackClass: 'fallback-class',
                             chosenClass: 'chosen-class',
                             ghostClass: 'ghost-class',
+                            */
                         },
                         viewsOptions: {
                             group: {
@@ -129,9 +136,11 @@
                             animation: 300, // 加动画。
                             forceFallback: true, // 是否模拟html5的拖拽(强制降级兼容处理)。设置为true在拖拽时可以使用鼠标滚轮控制容器滚动。
                             // class应该在拖拽之初进行设置，被选中的进行高亮即可。
+                            /*
                             fallbackClass: 'fallback-class',
                             chosenClass: 'chosen-class',
                             ghostClass: 'ghost-class',
+                            */
                         },
                         componentsOldHighlightIndex: -1,
                         components: [
@@ -198,13 +207,16 @@
                         }
                     },
                     componentsMousedown(index) {
+                        /*
                         console.log('componentsMousedown index', index);
                         this.components.forEach(item => {
                             item.isHighlight = false;
                         });
                         this.components[index].isHighlight = true;
+                        */
                     },
                     componentsMouseup(index) {
+                        /*
                         console.log('componentsMouseup index', index);
                         this.components.forEach(item => {
                             item.isHighlight = false;
@@ -212,6 +224,7 @@
                         if (this.componentsOldHighlightIndex !== -1) {
                             this.components[this.componentsOldHighlightIndex].isHighlight = true;
                         }
+                        */
                     },
                     viewsMousedown(index) {
                         console.log('viewsMousedown index', index);
