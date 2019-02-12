@@ -45,15 +45,29 @@
                 height: 80px;
                 background: #f1f1f1;
             }
+
+            .highlight {
+                border-bottom-color: #f00;
+            }
         </style>
     </head>
     <body>
         <div id="app">
             <draggable class="components" v-model="components" :options="componentsOptions" @start="componentsStart" @end="componentsEnd">
-                <div v-for="(item,index) in components" :key="item.name" class="components-item">{{item.name}}</div>
+                <div v-for="(item,index) in components" :key="item.name"
+                     class="components-item"
+                     :class="{highlight:item.isHighlight}"
+                >
+                    {{item.name}}
+                </div>
             </draggable>
             <draggable class="views" v-model="views" :options="viewsOptions">
-                <div v-for="(item,index) in views" :key="item.name" class="views-item">{{item.name}}</div>
+                <div v-for="(item,index) in views" :key="item.name"
+                     class="views-item"
+                     :class="{highlight:item.isHighlight}"
+                >
+                    {{item.name}}
+                </div>
             </draggable>
         </div>
         <script>
@@ -86,23 +100,29 @@
                             // chosenClass: 'chosenClass',
                             // ghostClass: 'ghostClass',
                         },
+                        componentsOldHighlightIndex: -1,
                         components: [
                             {
                                 name: '1',
+                                isHighlight: false,
                             },
                             {
                                 name: '2',
+                                isHighlight: false,
                             },
                             {
                                 name: '3',
+                                isHighlight: false,
                             },
                         ],
                         views: [
                             {
                                 name: '1s',
+                                isHighlight: false,
                             },
                             {
                                 name: '2s',
+                                isHighlight: false,
                             },
                         ],
                     };
@@ -111,6 +131,14 @@
                     componentsStart(e) {
                         console.log('start', e);
                         console.log('start this.views', this.views);
+                        // 当前选中的组件进行高亮
+                        this.components.forEach((item, index) => {
+                            if (item.isHighlight) {
+                                this.componentsOldHighlightIndex = index;
+                            }
+                            item.isHighlight = false;
+                        });
+                        this.components[e.oldIndex].isHighlight = true;
                     },
                     componentsEnd(e) {
                         console.log('end', e);
@@ -122,7 +150,29 @@
                                 name: obj.name + 's',
                             });
                             this.views.splice(e.newIndex + 1, 1);
+                            // 填充进去了，则当前组件高亮
+                            this.views.forEach(item => {
+                                item.isHighlight = false;
+                            });
+                            this.views[e.newIndex].isHighlight = true;
+                        } else {
+                            // 没填充进去，还原组件高亮
+                            this.components.forEach(item => {
+                                item.isHighlight = false;
+                            });
+                            if (this.componentsOldHighlightIndex !== -1) {
+                                this.components[this.componentsOldHighlightIndex].isHighlight = true;
+                            }
                         }
+                    },
+                    viewsStart(e) {
+                        console.log('start', e);
+                        console.log('start this.views', this.views);
+                        // 当前选中的组件进行高亮。待续...
+                        this.views.forEach((item, index) => {
+                            item.isHighlight = false;
+                        });
+                        this.views[e.oldIndex].isHighlight = true;
                     },
                 },
             });
