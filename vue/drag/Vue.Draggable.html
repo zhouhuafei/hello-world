@@ -69,14 +69,22 @@
                             },
                             clone: true, // 开启克隆。
                             sort: false, // 关闭排序。
-                            forceFallback: true, // 设置为true在拖拽时可以使用鼠标滚轮控制容器滚动(此处也要设置为true，否则左侧组件就无法拖拽到右侧容器中了)。
+                            forceFallback: true, // 是否模拟html5的拖拽(强制降级兼容处理)。设置为true在拖拽时可以使用鼠标滚轮控制容器滚动(此处也要设置为true，否则左侧组件就无法拖拽到右侧容器中了)。
+                            // class应该在拖拽之初进行设置，被选中的进行高亮即可。
+                            // fallbackClass: 'fallbackClass',
+                            // chosenClass: 'chosenClass',
+                            // ghostClass: 'ghostClass',
                         },
                         viewsOptions: {
                             group: {
                                 name: 'relation',
                             },
                             animation: 300, // 加动画。
-                            forceFallback: true, // 设置为true在拖拽时可以使用鼠标滚轮控制容器滚动。
+                            forceFallback: true, // 是否模拟html5的拖拽(强制降级兼容处理)。设置为true在拖拽时可以使用鼠标滚轮控制容器滚动。
+                            // class应该在拖拽之初进行设置，被选中的进行高亮即可。
+                            // fallbackClass: 'fallbackClass',
+                            // chosenClass: 'chosenClass',
+                            // ghostClass: 'ghostClass',
                         },
                         components: [
                             {
