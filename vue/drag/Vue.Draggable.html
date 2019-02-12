@@ -176,14 +176,6 @@
                             this.components[this.componentsOldHighlightIndex].isHighlight = true;
                         }
                     },
-                    viewsStart(e) {
-                        console.log('viewsStart e', e);
-                        // 当前选中的组件进行高亮。待续...
-                        this.views.forEach((item, index) => {
-                            item.isHighlight = false;
-                        });
-                        this.views[e.oldIndex].isHighlight = true;
-                    },
                     viewsMousedown(index) {
                         console.log('viewsMousedown index', index);
                         this.views.forEach(item => {
