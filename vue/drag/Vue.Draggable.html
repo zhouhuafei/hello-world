@@ -108,20 +108,24 @@
                             {
                                 name: 'one',
                                 isHighlight: false,
+                                defaultConfig: {},
                             },
                             {
                                 name: 'two',
                                 isHighlight: false,
+                                defaultConfig: {},
                             },
                             {
                                 name: 'three',
                                 isHighlight: false,
+                                defaultConfig: {},
                             },
                         ],
                         views: [
                             {
                                 name: 'one',
                                 isHighlight: false,
+                                config: {},
                             },
                         ],
                     };
@@ -142,6 +146,9 @@
                             var obj = this.views[e.newIndex];
                             this.views.splice(e.newIndex, 0, {
                                 name: obj.name,
+                                isHighlight: false,
+                                config: JSON.parse(JSON.stringify(obj.defaultConfig || {})),
+                                // 如果有其他默认属性，请务必加上。否则数据改变无法驱动DOM的改变。
                             });
                             this.views.splice(e.newIndex + 1, 1);
                             // 填充进去了，则当前组件高亮
@@ -187,7 +194,7 @@
                         this.components.forEach((item, index2) => {
                             if (item.name === name) {
                                 item.isHighlight = true;
-                                this.componentsOldHighlightIndex.isHighlight = index2;
+                                this.componentsOldHighlightIndex = index2;
                             } else {
                                 item.isHighlight = false;
                             }
