@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="https://cdn.bootcss.com/vue/2.5.21/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">{{value}}</div>
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    value: 'hello world',
+                },
+                beforeCreate() {
+                    console.log('beforeCreate', this.$el, this.value, 'el和data并未初始化');
+                },
+                created() {
+                    console.log('created', this.$el, this.value, '完成了data的初始化，el没有');
+                },
+                beforeMount() {
+                    console.log('beforeMount', this.$el, this.value, '完成了el的初始化，此时dom尚未被渲染到页面中');
+                },
+                mounted() {
+                    console.log('mounted', this.$el, this.value, '完成挂载，此时dom已被渲染到页面中');
+                },
+            });
+        </script>
+    </body>
+</html>
