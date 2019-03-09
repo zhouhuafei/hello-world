@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="https://cdn.bootcss.com/vue/2.5.21/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <g-sub @click.native="click"></g-sub>
+        </div>
+        <script>
+            Vue.component('g-sub', {
+                mounted() {
+                },
+                template: `<div>
+                    <div>我是自定义组件。</div>
+                    <div>给自定义组件直接绑定@click事件是无效的。</div>
+                    <div>想要生效需要使用事件的.native修饰符。</div>
+                    <div>.native - 监听组件根元素的原生事件。 </div>
+                </div>`,
+            });
+            new Vue({
+                el: '#app',
+                methods: {
+                    click(e) {
+                        console.log('this', this);
+                        console.log('e', e);
+                    },
+                },
+            });
+        </script>
+    </body>
+</html>
