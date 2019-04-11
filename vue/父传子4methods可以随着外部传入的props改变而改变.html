@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="https://cdn.bootcss.com/vue/2.5.21/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input v-model="value"/>
+            <p>{{value}}</p>
+            <g-sub :value="value"></g-sub>
+        </div>
+        <script>
+            Vue.component('g-sub', {
+                props: ['value'],
+                methods: {
+                    myValue() {
+                        return this.value;
+                    },
+                },
+                template: `<div>{{myValue()}}</div>`,
+            });
+            new Vue({
+                el: '#app',
+                data: {
+                    value: 'hello world',
+                },
+            });
+        </script>
+    </body>
+</html>
