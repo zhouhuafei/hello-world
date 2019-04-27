@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>完美</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                text-align: center;
+                background: #f8f8f8;
+            }
+
+            .container {
+                min-height: 100vh; /* 如果不使用单位vh，则html和body需要加宽高100% */
+                /*margin-bottom: -50px; !* 修复页面空屏状态时会出现滚动条的问题 *!*/
+                /*padding-bottom: 50px; !* 修复页面满屏状态时内容会被版权覆盖的问题(导致出新的问题，空屏有滚动条) *!*/
+                margin-bottom: -150px; /* 修复页面空屏状态时会出现滚动条的问题【加上了底部导航100的高度，否则空屏会出现滚动条】 */
+                padding-bottom: 150px; /* 修复页面满屏状态时内容会被版权覆盖的问题(导致出新的问题，空屏有滚动条)【加上了底部导航100的高度，否则空屏会出现滚动条】 */
+                box-sizing: border-box; /* 修复(导致出新的问题，空屏有滚动条) */
+            }
+
+            .copyright {
+                height: 50px;
+                line-height: 50px;
+                background: #eeeeee;
+            }
+
+            .footer-nav {
+                position: fixed;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100px;
+                background: #ffffff;
+                box-sizing: border-box;
+                border-top: 1px solid #f00;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+            <div>8</div>
+        </div>
+        <div class="copyright">copyright</div>
+        <div class="footer-nav">footer-nav</div>
+    </body>
+</html>

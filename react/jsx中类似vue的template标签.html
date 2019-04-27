@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>在react中要使用onChange替换onInput</title>
+    </head>
+    <body>
+        <h2>原生js的onchange事件如下：(失去焦点才触发)</h2>
+        <input type="text" value="hello world!"/>
+        <p>hello world!</p>
+        <script>
+            let input = document.querySelector('input');
+            let p = document.querySelector('p');
+            input.addEventListener('change', function () {
+                p.innerHTML = input.value;
+            });
+        </script>
+
+        <!--react的onChange事件-->
+        <div id="app"></div>
+        <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+        <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+        <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+        <script type="text/babel">
+            class HelloWorld extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                        value: 'hello world!',
+                    };
+                }
+
+                onChange(e) {
+                    this.setState({
+                        value: e.currentTarget.value,
+                    });
+                }
+
+                render() {
+                    let {
+                        value,
+                    } = this.state;
+                    return (
+                        <div>
+                            <h2>react的onChange事件如下：(和原生oninput事件类似，输入就触发)</h2>
+                            <input type="text" onChange={this.onChange.bind(this)} value={value}/>
+                            <p>{value}</p>
+                        </div>
+                    );
+                }
+            }
+
+            ReactDOM.render(
+                <HelloWorld></HelloWorld>,
+                document.getElementById('app'),
+            );
+        </script>
+    </body>
+</html>
