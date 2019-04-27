@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>存在问题-页面满屏状态时内容会被版权覆盖</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                text-align: center;
+                background: #f8f8f8;
+            }
+
+            .container {
+                min-height: 100vh;
+                margin-bottom: -50px; /* 修复页面空屏状态时会出现滚动条的问题 */
+            }
+
+            .copyright {
+                height: 50px;
+                line-height: 50px;
+                background: #eeeeee;
+            }
+
+            .footer-nav-wrap {
+                height: 100px;
+                line-height: 100px;
+            }
+
+            .footer-nav {
+                position: fixed;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: inherit;
+                background: #ffffff;
+                box-sizing: border-box;
+                border-top: 1px solid #f00;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">container</div>
+        <div class="copyright">copyright</div>
+        <!--
+        <div class="footer-nav-wrap">
+            <div class="footer-nav">footer-nav</div>
+        </div>
+        -->
+    </body>
+</html>
