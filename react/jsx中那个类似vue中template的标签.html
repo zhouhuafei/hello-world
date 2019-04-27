@@ -24,9 +24,11 @@
                     } = this.state;
                     return (
                         <div>
-                            <>
-                                {value}
-                            </>
+                            {
+                                value ? (<div>
+                                    {value}
+                                </div>) : ''
+                            }
                         </div>
                     );
                 }
