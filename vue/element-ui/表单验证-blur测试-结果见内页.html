@@ -11,13 +11,10 @@
     </head>
     <body>
         <!--
-        测试：
+        测试总结：
         以下el-form-item上绑定了prop="name"。
         name上有对应的必填验证和blur时验证。
         el-form-item内两个el-input中的任何一个触发了blur事件，都会触发验证规则。
-
-        结论：
-        el-form-item中任何一个input触发了blur事件，都会走对应的prop上指定的验证。
         -->
         <div id="app">
             <el-form :model="form" :rules="rules" ref="form" label-width="100px">
