@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    </head>
+    <body>
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="活动名称" prop="name">
+                <el-input v-model="ruleForm.name1"></el-input>
+                <el-input v-model="ruleForm.name2"></el-input>
+            </el-form-item>
+        </el-form>
+        <script>
+            export default {
+                data() {
+                    return {
+                        ruleForm: {
+                            name: '',
+                            name1: '',
+                            name2: '',
+                        },
+                        rules: {
+                            name: [{required: true, message: '请输入活动名称', trigger: 'blur'}],
+                        },
+                    };
+                },
+                methods: {
+                    submitForm(formName) {
+                        this.$refs[formName].validate((valid) => {
+                            if (valid) {
+                                alert('submit!');
+                            } else {
+                                console.log('error submit!!');
+                                return false;
+                            }
+                        });
+                    },
+                    resetForm(formName) {
+                        this.$refs[formName].resetFields();
+                    },
+                },
+            };
+        </script>
+    </body>
+</html>
