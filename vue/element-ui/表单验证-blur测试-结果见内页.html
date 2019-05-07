@@ -10,17 +10,33 @@
         <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     </head>
     <body>
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="活动名称" prop="name">
-                <el-input v-model="ruleForm.name1"></el-input>
-                <el-input v-model="ruleForm.name2"></el-input>
-            </el-form-item>
-        </el-form>
+        <!--
+        测试：
+        以下el-form-item上绑定了prop="name"。
+        name上有对应的必填验证和blur时验证。
+        el-form-item内两个el-input中的任何一个触发了blur事件，都会触发验证规则。
+
+        结论：
+        el-form-item中任何一个input触发了blur事件，都会走对应的prop上指定的验证。
+        -->
+        <div id="app">
+            <el-form :model="form" :rules="rules" ref="form" label-width="100px">
+                <el-form-item label="活动名称" prop="name">
+                    <el-input style="width: 100px; margin-right: 10px;" v-model="form.name1"></el-input>
+                    <el-input style="width: 100px" v-model="form.name2"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
+                    <el-button @click="resetForm('form')">重置</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
         <script>
-            export default {
+            new Vue({
+                el: '#app',
                 data() {
                     return {
-                        ruleForm: {
+                        form: {
                             name: '',
                             name1: '',
                             name2: '',
@@ -45,7 +61,7 @@
                         this.$refs[formName].resetFields();
                     },
                 },
-            };
+            });
         </script>
     </body>
 </html>
