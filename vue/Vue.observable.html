@@ -20,7 +20,7 @@
             <div>展示：{{myState.count}}</div>
         </div>
         <script>
-            // const state = {count: 0}; // 一秒后，还展示0【这种方式我觉的也是可行的，如果绑定到data上(可触发试图更新)，也可以作为最小化的跨组件状态存储器(因为存在引用关系)】
+            // const state = {count: 0}; // 一秒后，还展示0【这种方式我觉的也是可行的，如果把state绑定到data上(可触发试图更新)，也可以作为最小化的跨组件状态存储器(因为存在引用关系)】
             const state = Vue.observable({count: 0}); // 一秒后，会展示20【需配合计算属性使用】
             new Vue({
                 el: '#app',
