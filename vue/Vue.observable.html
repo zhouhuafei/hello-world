@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    </head>
+    <body>
+        <!--
+        Vue.observable(object)
+        让一个对象可响应。
+        返回的对象可以直接用于渲染函数和计算属性内，并且会在发生改变时触发相应的更新。也可以作为最小化的跨组件状态存储器。
+        -->
+        <div id="app">
+            <div>需配合计算属性，如果此处直接使用state.count会报错</div>
+            <div>展示：{{myState.count}}</div>
+        </div>
+        <script>
+            // const state = {count: 0}; // 一秒后，还展示0
+            const state = Vue.observable({count: 0}); // 一秒后，会展示20
+            new Vue({
+                el: '#app',
+                computed: {
+                    myState() {
+                        return state;
+                    },
+                },
+                mounted() {
+                    setTimeout(() => {
+                        state.count = 20;
+                    }, 1000);
+                },
+            });
+        </script>
+    </body>
+</html>
