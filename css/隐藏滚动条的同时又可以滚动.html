@@ -7,6 +7,44 @@
         <title>Document</title>
     </head>
     <body>
+        <h2>方案0(推荐)</h2>
+        <style>
+            .element, .outer-container {
+                width: 200px;
+                height: 200px;
+            }
+
+            .outer-container {
+                position: relative;
+                overflow: hidden;
+            }
+
+            .inner-container {
+                position: absolute;
+                left: 0;
+                overflow-x: hidden;
+                overflow-y: scroll;
+                background: #999999;
+            }
+        </style>
+        <div class="outer-container">
+            <div class="inner-container">
+                <div class="element">
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                    <div>6</div>
+                    <div>7</div>
+                    <div>8</div>
+                    <div>9</div>
+                    <div>10</div>
+                    <div>11</div>
+                </div>
+            </div>
+        </div>
+        <h2>方案1</h2>
         <style>
             .wrap {
                 width: 200px;
@@ -26,7 +64,6 @@
                 right: -17px;
             }
         </style>
-        <h2>方案1</h2>
         <div class="wrap">
             <div class="content">
                 <div>1</div>
