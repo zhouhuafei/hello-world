@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>web_components</title>
+        <style>
+            /* 覆盖组件样式(加或者不加Shadow DOM，此行一直有效) */
+            user-card {
+                /* 不加Shadow DOM，需要!important才生效。加了Shadow DOM不需要!important也生效。 */
+                border-color: #ff0000 !important;
+            }
+
+            /* 覆盖组件样式(加了Shadow DOM则此行无效，不加Shadow DOM则此行有效) */
+            user-card .container > .email {
+                color: #ff0000;
+            }
+
+            /* 总结：加了Shadow DOM，无法覆盖user-card内部子元素的样式，user-card本身的样式可以被覆盖 */
+        </style>
+    </head>
+    <body>
+        <user-card
+            image="https://semantic-ui.com/images/avatar2/large/kristy.png"
+            name="User Name"
+            email="yourmail@some-email.com"
+        >
+            <p>no name slot - My different text</p>
+            <p slot="my-text">has name slot - My different text</p>
+            <!--
+            Vue中
+            不管slot有没有name属性，只要slot中有内容(后备内容)，就会默认展示。
+            Web Components中
+            slot有name属性且有slot中有内容(后备内容)，才会默认展示。
+            -->
+        </user-card>
+
+        <template id="userCardTemplate">
+            <style>
+                /* :host伪类，指代自定义元素本身。(加Shadow DOM，:host有效。不加Shadow DOM，:host无效)。 */
+                /* 没加Shadow DOM时，此处的:host无效，我换成user-card就有效了 */
+                :host {
+                    display: flex;
+                    align-items: center;
+                    width: 500px;
+                    background-color: #d4d4d4;
+                    border: 1px solid #d5d5d5;
+                    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                    border-radius: 3px;
+                    overflow: hidden;
+                    padding: 10px;
+                    box-sizing: border-box;
+                    font-family: 'Poppins', sans-serif;
+                }
+
+                p {
+                    margin: 0;
+                }
+
+                /* 以下有效 */
+                .image {
+                    flex: 0 0 auto;
+                    width: 160px;
+                    vertical-align: middle;
+                    border-radius: 5px;
+                }
+
+                .container {
+                    box-sizing: border-box;
+                    padding: 20px;
+                }
+
+                .container > .name {
+                    font-size: 20px;
+                    font-weight: 600;
+                    line-height: 1;
+                    margin-bottom: 5px;
+                }
+
+                .container > .email {
+                    font-size: 12px;
+                    opacity: 0.75;
+                    line-height: 1;
+                    margin-bottom: 15px;
+                }
+
+                .container > .button {
+                    padding: 10px 25px;
+                    font-size: 12px;
+                    border-radius: 5px;
+                    text-transform: uppercase;
+                }
+            </style>
+
+            <img class="image">
+            <div class="container">
+                <p class="name"></p>
+                <p class="email"></p>
+                <button class="button">Follow John</button>
+                <slot><p>no name slot - My default text</p></slot>
+                <slot name="my-text"><p>has name slot - My default text</p></slot>
+            </div>
+        </template>
+
+        <script>
+            class UserCard extends HTMLElement {
+                constructor() {
+                    super();
+
+                    var shadow = this.attachShadow({mode: 'closed'});
+
+                    var templateElem = document.getElementById('userCardTemplate');
+                    var content = templateElem.content.cloneNode(true);
+                    content.querySelector('img').setAttribute('src', this.getAttribute('image'));
+                    content.querySelector('.container>.name').innerText = this.getAttribute('name');
+                    content.querySelector('.container>.email').innerText = this.getAttribute('email');
+
+                    shadow.appendChild(content);
+                }
+
+                connectedCallback() {
+                    console.log('connectedCallback：Custom square element added to page.');
+                }
+
+                disconnectedCallback() {
+                    console.log('disconnectedCallback：Custom square element removed from page.');
+                }
+
+                adoptedCallback() {
+                    console.log('adoptedCallback：Custom square element moved to new page.');
+                }
+
+                attributeChangedCallback(name, oldValue, newValue) {
+                    console.log('attributeChangedCallback：Custom square element attributes changed.');
+                }
+            }
+
+            window.customElements.define('user-card', UserCard);
+        </script>
+    </body>
+</html>

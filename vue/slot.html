@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+        <style>
+            /*
+            想下，element-ui中，el-input的slot="append"(新的写法v-slot:append)。
+            有样式，但是默认不展示，只有对应slot中有内容时，才展示。
+            使用的是v-if="$slots.append"实现的。
+            但是使用下述css的内容非空选择器亦可实现。
+            */
+            /*
+            p:empty 选择没有子元素的每个 <p> 元素（包括文本节点）。
+            :not(p) 选择非 <p> 元素的每个元素。
+            p:not(:empty) 选择非空 <p> 元素。
+            ::selection 选择被用户选取的元素部分。
+            */
+            .empty {
+                width: 50px;
+                height: 50px;
+                background: #ff0000;
+                color: #ffffff;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* 写法1 */
+            /*
+            .empty {
+                display: none;
+            }
+
+            .empty:not(:empty) {
+                display: flex;
+            }
+            */
+
+            /* 写法2 */
+            .empty:empty {
+                display: none;
+            }
+
+            ::selection {
+                background: #ff0000;
+                color: #ffffff;
+            }
+        </style>
+    </head>
+    <body>
+        <!--
+        没name属性的slot
+        默认name属性为default
+        不加v-slot:default则默认就是v-slot:default
+        -->
+        <!--
+        Vue中
+        不管slot有没有name属性，只要slot中有内容(后备内容)，就会默认展示。
+        Web Components中
+        slot有name属性且有slot中有内容(后备内容)，才会默认展示。
+        -->
+        <div id="app">
+            <g-sub>
+                <template v-slot:header>
+                    <p>has name slot - My different text - header</p>
+                </template>
+                <p>no name slot - My different text - body</p>
+                <template v-slot:footer="slotProps">
+                    <p>
+                        <span>has name slot - My different text - footer -</span>
+                        <span style="color:red;">{{slotProps.attr}}</span>
+                    </p>
+                </template>
+                <template v-slot:empty>
+                    <p>11</p>
+                </template>
+                <template v-slot:test></template>
+            </g-sub>
+        </div>
+        <script>
+            /*props不允许被改变，但是如果使用sync语法糖配合this.$emit可以脱离限制，实现双向数据绑定。*/
+            Vue.component('g-sub', {
+                data() {
+                    return {
+                        attr: '这是作用域插槽',
+                    };
+                },
+                template: `<div>
+                    <h2>slot测试</h2>
+                    <slot name="header"><p>has name slot - My default text - header</p></slot>
+                    <slot><p>no name slot - My default text - body</p></slot>
+                    <slot name="footer" :attr="attr"><p>has name slot - My default text - footer</p></slot>
+                    <div class="empty">
+                        <slot name="empty"></slot>
+                    </div>
+                    <slot name="test"></slot>
+                </div>`,
+                mounted() {
+                    console.log(this.$slots);
+                },
+            });
+            new Vue({
+                el: '#app',
+            });
+        </script>
+    </body>
+</html>
+
