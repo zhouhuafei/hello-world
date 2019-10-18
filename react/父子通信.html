@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>父子通信</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+    <script type="text/babel">
+    class MyChild extends React.Component {
+      constructor (props) {
+        super(props)
+        this.state = {
+          hello: 'world'
+        }
+      }
+
+      render () {
+        // 事件传递参数
+        return (
+          <div onClick={this.childFn.bind(this, 'arg1', 'arg2')}>my-child</div>
+        )
+      }
+
+      // ev在函数内可通过最后一个参数获取到。
+      childFn (arg1, arg2, ev) {
+        this.props.parentFn(arg1, arg2)
+      }
+    }
+
+    class MyParent extends React.Component {
+      constructor (props) {
+        super(props)
+        this.state = {
+          hello: 'world'
+        }
+      }
+
+      render () {
+        // 事件传递参数
+        return (
+          <MyChild parentFn={this.parentFn.bind(this)}></MyChild>
+        )
+      }
+
+      // ev在函数内可通过最后一个参数获取到。
+      parentFn (arg1, arg2) {
+        console.log(arg1, arg2) // 'arg1' 'arg2'
+      }
+    }
+
+    ReactDOM.render(
+      <MyParent></MyParent>,
+      document.getElementById('app')
+    )
+    </script>
+  </body>
+</html>
