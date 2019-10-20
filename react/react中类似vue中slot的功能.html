@@ -31,17 +31,23 @@
                 return v
               }
             })}
-            {/*模拟vue的具名插槽*/}
-            <div>模拟vue的具名插槽</div>
-            {this.props.children.map(v => {
+            {/*模拟vue的具名插槽和具名插槽的后备内容*/}
+            <div>模拟vue的具名插槽和具名插槽的后备内容 - 接收时不过滤名称相同的slot</div>
+            {this.props.children.map((v, i) => {
               if (v.props && v.props.name) {
                 if (v.props.children) {
                   return v
+                } else {
+                  return (
+                    <div key={i}>
+                      <div>{v.props.name} default value</div>
+                    </div>
+                  )
                 }
               }
             })}
-            {/*模拟vue的具名插槽的后备内容*/}
-            <div>模拟vue的具名插槽的后备内容 - vue中slot名称相同时只识别最后一个</div>
+            {/*模拟vue的具名插槽和具名插槽的后备内容*/}
+            <div>模拟vue的具名插槽和具名插槽的后备内容 - vue中slot名称相同时只识别最后一个</div>
             {
               this.getSlot5().map((v, i) => {
                 if (v.props.children) {
