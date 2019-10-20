@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>react中类似vue中slot的功能</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+    <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+    <script type="text/babel">
+    class MyChild extends React.Component {
+      constructor (props) {
+        super(props)
+        this.state = {
+          hello: 'world'
+        }
+      }
+
+      render () {
+        console.log(this.props)
+        // 事件传递参数 - 事件配合bind(this)可防止this指向被改变。
+        return (
+          <div onClick={this.childFn.bind(this, 'arg1', 'arg2')}>
+            my-child
+            {/*模拟vue的非具名插槽*/}
+            <div>模拟vue的非具名插槽</div>
+            {this.props.children.map(v => {
+              if (!v.props || !v.props.name) {
+                return v
+              }
+            })}
+            {/*模拟vue的具名插槽*/}
+            <div>模拟vue的具名插槽</div>
+            {this.props.children.map(v => {
+              if (v.props && v.props.name) {
+                if (v.props.children) {
+                  return v
+                }
+              }
+            })}
+            {/*模拟vue的具名插槽的后备内容*/}
+            <div>模拟vue的具名插槽的后备内容 - vue中slot名称相同时只识别最后一个</div>
+            {
+              this.getSlot5().map((v, i) => {
+                if (v.props.children) {
+                  return v
+                } else {
+                  return (
+                    <div key={i}>
+                      <div>slot5 default value</div>
+                    </div>
+                  )
+                }
+              })
+            }
+            {/*模拟vue的作用域插槽*/}
+            <div>模拟vue的作用域插槽</div>
+            {this.props.scopeSlot('hello')}
+          </div>
+        )
+      }
+
+      getSlot5 () {
+        const arr = this.props.children.filter(v => v.props && v.props.name === 'slot5')
+        const len = arr.length
+        return [arr[len - 1]] // vue中slot名称相同时只识别最后一个。
+        // return arr
+      }
+
+      // ev在函数内可通过最后一个参数获取到。
+      childFn (arg1, arg2, ev) {
+        this.props.parentFn(arg1, arg2)
+      }
+    }
+
+    class MyParent extends React.Component {
+      constructor (props) {
+        super(props)
+        this.state = {
+          hello: 'world'
+        }
+      }
+
+      render () {
+        // 使用scopeSlot方法模拟作用域插槽
+        return (
+          <MyChild scopeSlot={this.scopeSlot} parentFn={this.parentFn.bind(this)}>
+            start
+            <div>div</div>
+            <div name="slot1">slot1</div>
+            <div name="slot2">slot2</div>
+            <div name="slot3">slot3</div>
+            <div name="slot4">slot4</div>
+            {/*vue中slot名称相同时只识别最后一个*/}
+            <div name="slot5">slot5</div>
+            <div name="slot5"></div>
+            end
+          </MyChild>
+        )
+      }
+
+      scopeSlot (name) {
+        // 设置class只能用className
+        // 设置style只能用下面这种书写格式
+        return <div style={{ color: 'red' }} className={`class1 class2`}>{name} scope slot</div>
+      }
+
+      parentFn (arg1, arg2) {
+        console.log(arg1, arg2) // 'arg1' 'arg2'
+      }
+    }
+
+    ReactDOM.render(
+      <MyParent></MyParent>,
+      document.getElementById('app')
+    )
+    </script>
+  </body>
+</html>
