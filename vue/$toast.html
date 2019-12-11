@@ -13,7 +13,13 @@
      * https://github.com/ElemeFE/element/blob/dev/packages/message/src/main.vue
      * */
     const ToastConstructor = Vue.extend({
+      data: () => ({
+        duration: 3000
+      }),
       template: `<div><b>{{message}}</b></div>`,
+      mounted () {
+        console.log('mounted this.duration：\n', this.duration)
+      },
       methods: {
         close () {
           this.$el.parentNode.removeChild(this.$el)
@@ -26,9 +32,11 @@
           message: options
         }
       }
+      options.hello = 'world'
       const instance = new ToastConstructor({ data: options })
       instance.$mount()
       document.body.appendChild(instance.$el)
+      console.log('instance.duration：\n', instance.duration)
       setTimeout(() => {
         instance.close() // 等同于 instance.$el.parentNode.removeChild(instance.$el)
         // instance.$el.remove() // 此方法不兼容IE
