@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.21/vue.js"></script>
+  </head>
+  <body>
+    <script>
+    /**
+     * 建议参考：
+     * https://github.com/ElemeFE/element/blob/dev/packages/message/src/main.js
+     * https://github.com/ElemeFE/element/blob/dev/packages/message/src/main.vue
+     * */
+    const ToastConstructor = Vue.extend({
+      template: `<div><b>{{message}}</b></div>`,
+      methods: {
+        close () {
+          this.$el.parentNode.removeChild(this.$el)
+        }
+      }
+    })
+    const $toast = (options = {}) => {
+      if (typeof options === 'string') {
+        options = {
+          message: options
+        }
+      }
+      const instance = new ToastConstructor({ data: options })
+      instance.$mount()
+      document.body.appendChild(instance.$el)
+      setTimeout(() => {
+        instance.close() // 等同于 instance.$el.parentNode.removeChild(instance.$el)
+        // instance.$el.remove() // 此方法不兼容IE
+      }, 3000)
+      console.log('instance：\n', instance)
+      console.log('instance.$el：\n', instance.$el)
+    }
+    $toast('hello world')
+    </script>
+  </body>
+</html>
