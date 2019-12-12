@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    >
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>scratch card clip</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        overflow: hidden;
+      }
+
+      canvas, img {
+        display: block;
+        margin: 50px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas></canvas>
+    <img src="./img.jpg" alt="">
+    <script>
+    class Super {
+      constructor () {
+        this.init()
+      }
+
+      init () {
+        const canvas = document.querySelector('canvas')
+        const img = document.querySelector('img')
+        const ctx = canvas.getContext('2d')
+        const w = 311
+        const h = 311
+        const bg = '#ccc'
+
+        canvas.width = w
+        canvas.height = h
+
+        const draw = () => {
+          // bg
+          ctx.save()
+          ctx.beginPath()
+          ctx.fillStyle = bg
+          ctx.fillRect(0, 0, w, h)
+          ctx.fill()
+          ctx.closePath()
+          ctx.restore()
+          // clip
+          ctx.save()
+          ctx.beginPath()
+          ctx.rect(0, 0, w, 100)
+          ctx.clip()
+          ctx.drawImage(img, 0, 0, w, h)
+          ctx.closePath()
+          ctx.restore()
+          // clip
+          ctx.save()
+          ctx.beginPath()
+          ctx.arc(w / 2, h / 2, 50, 0, 360 * Math.PI / 180, false)
+          ctx.clip()
+          ctx.drawImage(img, 0, 0, w, h)
+          ctx.closePath()
+          ctx.restore()
+          // clip
+          ctx.save()
+          ctx.beginPath()
+          ctx.rect(0, h, w, -100)
+          ctx.clip()
+          ctx.drawImage(img, 0, 0, w, h)
+          ctx.closePath()
+          ctx.restore()
+        }
+
+        // 获取刮开了百分之多少？
+        const getFilledPercentage = () => {
+          let imgData = ctx.getImageData(0, 0, w, h)
+          let pixels = imgData.data
+          console.log('imgData：\n', imgData)
+          console.log('pixels：\n', pixels)
+          let transPixels = []
+          for (let i = 0; i < pixels.length; i += 4) {
+            if (pixels[i] !== 204 && pixels[i + 1] !== 204 && pixels[i + 2] !== 204) {
+              transPixels.push(pixels[i + 3])
+            }
+          }
+          const result = (transPixels.length / (pixels.length / 4) * 100).toFixed(2) + '%'
+          console.log('刮开了：\n', result)
+          return result
+        }
+
+        img.addEventListener('load', () => {
+          draw()
+          getFilledPercentage()
+        })
+      }
+    }
+
+    new Super()
+    </script>
+  </body>
+</html>
