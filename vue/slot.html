@@ -66,8 +66,9 @@
       <g-sub>
         <p>hello ------ no name slot ⬇</p>
         <p>no name slot - value</p>
-        <!--以上会被插入到子组件内的非具名插槽里，如果非具名插槽有多个，则被插入到多个非具名插槽里-->
+        <!-- 以上会被插入到子组件内的非具名插槽里，如果非具名插槽有多个，则被插入到多个非具名插槽里 -->
         <template v-slot:header></template>
+        <!-- 非具名插槽 v-slot="slotProps" 等同于 v-slot:default="slotProps" -->
         <template v-slot:footer="slotProps">
           <p>
             <span>has name slot - footer value</span>
