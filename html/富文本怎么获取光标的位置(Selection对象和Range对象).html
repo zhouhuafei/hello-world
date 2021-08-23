@@ -53,7 +53,6 @@
                     console.log('是div节点或者是div节点的子级，走Range', Range);
                 }
                 if (!isChildOrSelf(div, Range.commonAncestorContainer) && saveRange) {
-                    saveRange.insertNode(span);
                     saveRange.deleteContents() // 从文档中移除 Range 包含的内容。
                     saveRange.insertNode(span) // 在 Range 的起点处插入一个节点。
                     saveRange.setStartAfter(span) // 以其它节点为基准，设置 Range 的起点。
